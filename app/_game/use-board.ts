@@ -11,7 +11,7 @@ const USED_KEYS = new Map<string, Direction>([
 ])
 
 export const useBoard = () => {
-  const grid = useGameStore((state) => state.grid)
+  const board = useGameStore((state) => state.board)
   const move = useGameStore((state) => state.move)
   const spawnTiles = useGameStore((state) => state.spawnTiles)
 
@@ -31,5 +31,5 @@ export const useBoard = () => {
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [move])
 
-  return { grid }
+  return { board }
 }

@@ -1,35 +1,44 @@
 "use client"
 import { create } from "zustand"
-import { Direction, GameStoreType } from "./game.types"
+import { Direction, GameStoreType, Tile } from "./game.types"
+import { v4 as uuidv4 } from "uuid"
 
-const initialGrid = Array(16).fill(0)
+const initialBoard = Array(16).fill(null)
 
-const addRandomTilesToGrid = (grid: number[], nbTiles: number) => {
-  let newGrid = [...grid]
+const addRandomTiles = (board: (Tile | null)[], nbTiles: number) => {
+  const newBoard = [...board]
+  const hasEmptyCells = newBoard.some((tile) => tile === null)
 
-  for (let i = 0; i < nbTiles; i++) {
-    const tileToSpawn = Math.random() < 0.9 ? 2 : 4
-    const emptyCells = newGrid
-      .map((cell, index) => (cell === 0 ? index : null))
-      .filter(Boolean) as number[]
-    const randomCells = emptyCells.sort(() => Math.random() - 0.5).slice(0, 1)
-    newGrid = newGrid.map((cell, index) =>
-      randomCells.includes(index) ? tileToSpawn : cell
-    )
+  if (!hasEmptyCells) {
+    return newBoard
   }
 
-  return newGrid
+  for (let i = 0; i < nbTiles; i++) {
+    const tileValue = Math.random() < 0.9 ? 2 : 4
+    const emptyCells = newBoard
+      .map((tile, index) => (tile === null ? index : null))
+      .filter(Boolean) as number[]
+    const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+    const tileToCreate = {
+      value: tileValue,
+      id: uuidv4()
+    }
+
+    newBoard[randomCell] = tileToCreate
+  }
+
+  return newBoard
 }
 
 export const useGameStore = create<GameStoreType>((set) => ({
-  grid: initialGrid,
+  board: initialBoard,
   move: (dir: Direction) => {
     console.log(dir)
   },
-  reset: () => set(() => ({ grid: initialGrid })),
+  reset: () => {},
   spawnTiles: () => {
     set((state) => {
-      return { grid: addRandomTilesToGrid(state.grid, 2) }
+      return { board: addRandomTiles(state.board, 2) }
     })
   }
 }))
