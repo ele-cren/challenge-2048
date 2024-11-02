@@ -34,6 +34,20 @@ export const useGameStore = create<GameStoreType>((set) => ({
   board: initialBoard,
   move: (dir: Direction) => {
     console.log(dir)
+    set((state) => {
+      const currentBoard = [...state.board]
+
+      for (let i = 0; i < currentBoard.length; i++) {
+        const tile = currentBoard[i]
+
+        if (tile && i - 1 >= 0 && !currentBoard[i - 1]) {
+          currentBoard[i - 1] = tile
+          currentBoard[i] = null
+        }
+      }
+
+      return { board: currentBoard }
+    })
   },
   reset: () => {},
   spawnTiles: () => {
