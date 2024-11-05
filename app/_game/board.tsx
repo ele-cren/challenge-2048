@@ -4,10 +4,6 @@ import clsx from "clsx"
 import { useBoard } from "./use-board"
 import { motion } from "framer-motion"
 
-// TODO : To animate, need empty board then tiles on top of it
-// Try animate. If not working, use a different approach
-// -> Use empty board then loop through existing tiles. Tiles have positions. Set start-col and start-row to position inside grid.
-
 export const Board = () => {
   const { board } = useBoard()
 

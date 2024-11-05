@@ -14,7 +14,7 @@ export type Tile = {
 
 export type GameStoreType = {
   board: (Tile | null)[]
-  move: (dir: Direction) => void
   reset: () => void
   spawnTiles: () => void
+  updateBoard: (board: (Tile | null)[]) => void
 }
