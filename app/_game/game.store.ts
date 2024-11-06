@@ -39,10 +39,14 @@ export const useGameStore = create<GameStoreType>((set) => ({
   updateBoard: (board: (Tile | null)[]) => {
     set({ board })
   },
+  score: 0,
+  addScore: (score: number) => {
+    set((state) => ({ score: state.score + score }))
+  },
   reset: () => {},
-  spawnTiles: () => {
+  spawnTiles: (nbTiles: number) => {
     set((state) => {
-      return { board: addRandomTiles(state.board, 2) }
+      return { board: addRandomTiles(state.board, nbTiles) }
     })
   }
 }))

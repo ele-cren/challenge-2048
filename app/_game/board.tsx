@@ -21,6 +21,7 @@ export const Board = () => {
               }
             )}
             layout
+            transition={{ duration: 0.2 }}
           >
             {tile ? tile?.value : null}
           </motion.div>

@@ -14,7 +14,9 @@ export type Tile = {
 
 export type GameStoreType = {
   board: (Tile | null)[]
+  score: number
+  addScore: (score: number) => void
   reset: () => void
-  spawnTiles: () => void
+  spawnTiles: (nbTiles: number) => void
   updateBoard: (board: (Tile | null)[]) => void
 }
